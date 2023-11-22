@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import "./App.css";
+import PlayerImg from "./assets/player.svg"
 
 const socket = io("https://mmoserver.webpubsub.azure.com", {
   path: "/clients/socketio/hubs/Hub",
@@ -23,25 +25,21 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Click anywhere to move your ball</h1>
+    <div className='bg'>
+
       {Object.entries(balls).map(([id, data]) => (
-        <div
+        <div className='player'
           key={id}
           style={{
             position: 'absolute',
             left: data.x,
             top: data.y,
-            width: '30px',
-            height: '30px',
-            backgroundColor: data.color,
-            borderRadius: '50%',
             transition: 'left 0.5s, top 0.5s',
             textAlign: 'center',
             color: 'black'
           }}
-        >
-          <div>{data.name}</div>
+        ><div>{data.name}</div><img src={PlayerImg} />
+          
         </div>
       ))}
     </div>
