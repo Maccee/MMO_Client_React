@@ -1,49 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import React, { useEffect, useState, useRef } from "react";
+import io from "socket.io-client";
+import { handleMouseClick, handleMovement, computeDirection } from "./utils/MovementUtils"; // Assume handleMovement is your new utility
+import BackGround from "./components/BackGround";
 import "./App.css";
-import PlayerImg from "./assets/player.svg"
 
-const socket = io("https://mmoserver.webpubsub.azure.com", {
-  path: "/clients/socketio/hubs/Hub",
-});
+const socket = io("http://localhost:4000");
 
 const App = () => {
-  const [balls, setBalls] = useState({});
+  const [players, setPlayers] = useState({});
+  const movementLoopRef = useRef();
 
   useEffect(() => {
-    const name = prompt("Enter your name:");
-    socket.emit('updateName', name);
-
-    const handleMouseClick = (event) => {
-      socket.emit('moveBall', { x: event.clientX, y: event.clientY });
+    // Movement loop
+    const updatePosition = () => {
+      const direction = computeDirection();
+      if (direction.x !== 0 || direction.y !== 0) {
+        socket.emit('playerMove', direction);
+      }
+      movementLoopRef.current = requestAnimationFrame(updatePosition);
     };
 
-    window.addEventListener('click', handleMouseClick);
-    socket.on('ballsUpdate', (updatedBalls) => setBalls(updatedBalls));
+    movementLoopRef.current = requestAnimationFrame(updatePosition);
 
-    return () => window.removeEventListener('click', handleMouseClick);
+    return () => {
+      cancelAnimationFrame(movementLoopRef.current);
+    };
   }, []);
 
-  return (
-    <div className='bg'>
+  useEffect(() => {
+    socket.on("playersUpdate", (updatedPlayers) => {
+      setPlayers(updatedPlayers);
+    });
 
-      {Object.entries(balls).map(([id, data]) => (
-        <div className='player'
-          key={id}
-          style={{
-            position: 'absolute',
-            left: data.x,
-            top: data.y,
-            transition: 'left 0.5s, top 0.5s',
-            textAlign: 'center',
-            color: 'black'
-          }}
-        ><div>{data.name}</div><img src={PlayerImg} />
-          
-        </div>
-      ))}
-    </div>
-  );
+    const mouseEventHandler = handleMouseClick(socket);
+    window.addEventListener("click", mouseEventHandler);
+
+    const keyDownHandler = (event) => handleMovement(event, true, socket);
+    const keyUpHandler = (event) => handleMovement(event, false, socket);
+    window.addEventListener("keydown", keyDownHandler);
+    window.addEventListener("keyup", keyUpHandler);
+
+    return () => {
+      window.removeEventListener("click", mouseEventHandler);
+      window.removeEventListener("keydown", keyDownHandler);
+      window.removeEventListener("keyup", keyUpHandler);
+      socket.off("playersUpdate");
+    };
+  }, []);
+
+  return <BackGround players={players}  />;
 };
 
 export default App;
