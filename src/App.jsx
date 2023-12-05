@@ -10,22 +10,19 @@ const App = () => {
   const [players, setPlayers] = useState({});
   const [gameArea, setGameArea] = useState({ width: 0, height: 0 });
   const [playerSize, setPlayerSize] = useState({ width: 0, height: 0 });
-
-  const currentPlayerId = socket.id;
   const movementLoopRef = useRef();
 
   useEffect(() => {
+    alert("Use W, A, S, D to move");
     // Movement loop
     const updatePosition = () => {
       const direction = computeDirection();
       if (direction.x !== 0 || direction.y !== 0) {
-        socket.emit('playerMove', direction);
+        socket.emit("playerMove", direction);
       }
       movementLoopRef.current = requestAnimationFrame(updatePosition);
     };
-
     movementLoopRef.current = requestAnimationFrame(updatePosition);
-
     return () => {
       cancelAnimationFrame(movementLoopRef.current);
     };
@@ -48,7 +45,6 @@ const App = () => {
     window.addEventListener("keyup", keyUpHandler);
 
     return () => {
-      
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
       socket.off("playersUpdate");
@@ -57,7 +53,27 @@ const App = () => {
     };
   }, []);
 
-  return <BackGround players={players} gameArea={gameArea} playerSize={playerSize} />;
+  useEffect(() => {
+    
+    const updateScrollPosition = () => {
+      if (Object.keys(players).includes(socket.id)) {
+        const currentPlayer = players[socket.id];
+
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        const deltaX = currentPlayer.x - centerX;
+        const deltaY = currentPlayer.y - centerY;
+
+        window.scrollTo(deltaX, deltaY);
+      }
+    };
+    updateScrollPosition();
+  }, [players]);
+
+  return (
+    <BackGround players={players} gameArea={gameArea} playerSize={playerSize} />
+  );
 };
 
 export default App;

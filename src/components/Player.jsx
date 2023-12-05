@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Player = ({ id, x, y, color, playerSize }) => {
+const Player = ({ id, x, y, color, playerSize, isNew }) => {
   
 
   return (
@@ -14,6 +14,7 @@ const Player = ({ id, x, y, color, playerSize }) => {
           left: x + "px",
           top: y + "px",
           backgroundColor: color,
+          animation: isNew ? "spawnAnimation 0.2s ease-out" : "none",
         }}
       />
       <div

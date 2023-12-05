@@ -12,6 +12,7 @@ const BackGround = ({ players, gameArea, playerSize }) => {
           y={player.y}
           color={player.color}
           playerSize={playerSize}
+          isNew={player.isNew}
         />
       ))}
     </div>

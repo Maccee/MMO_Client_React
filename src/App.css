@@ -1,11 +1,3 @@
-body,
-html {
-  margin: 4rem;
-  
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
 .bg {
   border: 10px solid black;
   background-image: url("./assets/bg.png");
@@ -15,12 +7,17 @@ html {
   transform: translate(-50%, -50%);
   border: 1px solid black;
 }
+
+@keyframes spawnAnimation {
+  0% {
+    transform: translate(-50%, -50%) scale(16);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
 .playerName {
   position: absolute;
   transform: translate(-50%, -300%);
-}
-.debug {
-  position: absolute;
-  font-size: 1rem;
-  z-index: 1000;
+  white-space: nowrap;
 }
