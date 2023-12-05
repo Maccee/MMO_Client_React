@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Player = ({ id, x, y, color }) => {
+const Player = ({ id, x, y, color, playerSize }) => {
   
 
   return (
@@ -8,6 +8,8 @@ const Player = ({ id, x, y, color }) => {
       <div
         className="player"
         style={{
+          width: playerSize.width,
+          height: playerSize.height,
           position: "absolute",
           left: x + "px",
           top: y + "px",

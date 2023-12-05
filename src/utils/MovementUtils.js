@@ -1,10 +1,3 @@
-export const handleMouseClick = (socket) => (event) => {
-  const x = event.clientX;
-  const y = event.clientY;
-  socket.emit("movePlayer", { x, y });
-};
-
-// MovementUtils.js
 
 // Initial state for key presses
 const keyState = {

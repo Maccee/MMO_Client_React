@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
-import { handleMouseClick, handleMovement, computeDirection } from "./utils/MovementUtils"; // Assume handleMovement is your new utility
+import { handleMovement, computeDirection } from "./utils/MovementUtils"; // Assume handleMovement is your new utility
 import BackGround from "./components/BackGround";
 import "./App.css";
 
@@ -8,6 +8,10 @@ const socket = io("http://localhost:4000");
 
 const App = () => {
   const [players, setPlayers] = useState({});
+  const [gameArea, setGameArea] = useState({ width: 0, height: 0 });
+  const [playerSize, setPlayerSize] = useState({ width: 0, height: 0 });
+
+  const currentPlayerId = socket.id;
   const movementLoopRef = useRef();
 
   useEffect(() => {
@@ -31,9 +35,12 @@ const App = () => {
     socket.on("playersUpdate", (updatedPlayers) => {
       setPlayers(updatedPlayers);
     });
-
-    const mouseEventHandler = handleMouseClick(socket);
-    window.addEventListener("click", mouseEventHandler);
+    socket.on("gameArea", (area) => {
+      setGameArea(area);
+    });
+    socket.on("playerSize", (playerSize) => {
+      setPlayerSize(playerSize);
+    });
 
     const keyDownHandler = (event) => handleMovement(event, true, socket);
     const keyUpHandler = (event) => handleMovement(event, false, socket);
@@ -41,14 +48,16 @@ const App = () => {
     window.addEventListener("keyup", keyUpHandler);
 
     return () => {
-      window.removeEventListener("click", mouseEventHandler);
+      
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
       socket.off("playersUpdate");
+      socket.off("gameArea");
+      socket.off("playerSize");
     };
   }, []);
 
-  return <BackGround players={players}  />;
+  return <BackGround players={players} gameArea={gameArea} playerSize={playerSize} />;
 };
 
 export default App;
