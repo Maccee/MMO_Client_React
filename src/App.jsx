@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import { handleMovement, computeDirection } from "./utils/MovementUtils"; // Assume handleMovement is your new utility
 import BackGround from "./components/BackGround";
+import Ui from "./components/Ui";
 import "./App.css";
 
 const socket = io("http://localhost:4000");
@@ -13,7 +14,6 @@ const App = () => {
   const movementLoopRef = useRef();
 
   useEffect(() => {
-    alert("Use W, A, S, D to move");
     // Movement loop
     const updatePosition = () => {
       const direction = computeDirection();
@@ -54,17 +54,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    
     const updateScrollPosition = () => {
       if (Object.keys(players).includes(socket.id)) {
         const currentPlayer = players[socket.id];
-
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
-
         const deltaX = currentPlayer.x - centerX;
         const deltaY = currentPlayer.y - centerY;
-
         window.scrollTo(deltaX, deltaY);
       }
     };
@@ -72,7 +68,14 @@ const App = () => {
   }, [players]);
 
   return (
-    <BackGround players={players} gameArea={gameArea} playerSize={playerSize} />
+    <>
+      <Ui />
+      <BackGround
+        players={players}
+        gameArea={gameArea}
+        
+      />
+    </>
   );
 };
 

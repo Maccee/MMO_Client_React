@@ -1,6 +1,7 @@
 import Player from "./Player";
 
-const BackGround = ({ players, gameArea, playerSize }) => {
+
+const BackGround = ({ players, gameArea }) => {
   return (
     <div className="bg"
     style={{ width: gameArea.width, height: gameArea.height }}>
@@ -11,10 +12,12 @@ const BackGround = ({ players, gameArea, playerSize }) => {
           x={player.x}
           y={player.y}
           color={player.color}
-          playerSize={playerSize}
+          playerWidth={player.size.width}
+          playerHeight={player.size.height}
           isNew={player.isNew}
         />
       ))}
+      
     </div>
   );
 };

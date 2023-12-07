@@ -1,6 +1,7 @@
 .bg {
   border: 10px solid black;
-  background-image: url("./assets/bg.png");
+  background-image: url("./assets/map.webp");
+  background-size: cover;
 }
 .player {
   border-radius: 50%;
@@ -20,4 +21,12 @@
   position: absolute;
   transform: translate(-50%, -300%);
   white-space: nowrap;
+}
+.ui {
+  font-size: 3rem;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  color: rgba(54, 54, 54, 0.583);
 }
