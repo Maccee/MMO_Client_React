@@ -1,26 +1,27 @@
 .bg {
   border: 10px solid black;
-  background-image: url("./assets/map.webp");
+  background-image: url("./assets/map.jpg");
   background-size: cover;
+  overflow: hidden;
 }
 .player {
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid black;
+   transform-origin: center;
+   
 }
 
 @keyframes spawnAnimation {
   0% {
-    transform: translate(-50%, -50%) scale(16);
+    transform: scale(16);
   }
   100% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1);
   }
 }
 .playerName {
   position: absolute;
-  transform: translate(-50%, -300%);
+  transform: translate(-37%, -150%);
   white-space: nowrap;
+  
 }
 .ui {
   font-size: 3rem;
