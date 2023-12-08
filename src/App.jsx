@@ -5,13 +5,13 @@ import BackGround from "./components/BackGround";
 import Ui from "./components/Ui";
 import "./App.css";
 
-//const socket = io("http://localhost:4000");
+const socket = io("https://autopeli.azurewebsites.net");
 
 
 
-const socket = io("https://mmoserver.webpubsub.azure.com", {
-    path: "/clients/socketio/hubs/Hub",
-});
+//const socket = io("https://mmoserver.webpubsub.azure.com", {
+//    path: "/clients/socketio/hubs/Hub",
+//});
 
 const App = () => {
   const [players, setPlayers] = useState({});
