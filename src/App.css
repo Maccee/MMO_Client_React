@@ -5,10 +5,11 @@
   overflow: hidden;
 }
 .player {
-   transform-origin: center;
-   
+  position: absolute;
 }
-
+.car {
+  transform-origin: center;
+}
 @keyframes spawnAnimation {
   0% {
     transform: scale(16);
@@ -19,9 +20,8 @@
 }
 .playerName {
   position: absolute;
-  transform: translate(-37%, -150%);
+  transform: translate(-50%, -290%);
   white-space: nowrap;
-  
 }
 .ui {
   font-size: 3rem;

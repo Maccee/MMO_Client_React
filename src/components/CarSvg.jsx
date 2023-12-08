@@ -1,6 +1,7 @@
 const CarSvg = ({ width, height, fill }) => {
     return (
       <svg
+      className="car"
         width={width}
         height={height}
         viewBox="0 0 47.032 47.032"  // Adjusted viewBox

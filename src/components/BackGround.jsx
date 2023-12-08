@@ -16,6 +16,7 @@ const BackGround = ({ players, gameArea}) => {
           playerHeight={player.size.height}
           isNew={player.isNew}
           rotation={player.rotation}
+          
         />
       ))}
       

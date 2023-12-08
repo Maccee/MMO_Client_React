@@ -1,21 +1,25 @@
 import CarSvg from "./CarSvg";
 
-const Player = ({ id, x, y, color, playerWidth, playerHeight, isNew, rotation }) => {
- 
+const Player = ({
+  id,
+  x,
+  y,
+  color,
+  playerWidth,
+  playerHeight,
+  isNew,
+  rotation,
+}) => {
   return (
     <div key={id} style={{ position: "relative" }}>
       <div
         className="player"
         style={{
-          width: playerWidth,
-          height: playerHeight,
-          position: "absolute",
-          left: x + "px",
-          top: y + "px",
+          left: `calc(${x}px - 25px)`, // Adjusting X to center
+          top: `calc(${y}px - 25px)`, // Adjusting Y to center
           color: color,
           animation: isNew ? "spawnAnimation 0.2s ease-out" : "none",
-          transform: `rotate(${rotation}deg)`, // Apply rotation
-          
+          transform: `translate(0%, 0%) rotate(${rotation}deg)`, // Combine rotate with translate
         }}
       >
         <CarSvg width={playerWidth} height={playerHeight} fill={color} />

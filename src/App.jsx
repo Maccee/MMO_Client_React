@@ -48,7 +48,7 @@ const App = () => {
   useEffect(() => {
     // Movement Loop
     const updateMovement = () => {
-      if (Object.keys(keyState).some(key => keyState[key])) {
+      if (Object.keys(keyState).some((key) => keyState[key])) {
         socket.emit("playerInput", keyState); // Emit key state if any key is pressed
       }
       movementLoopRef.current = requestAnimationFrame(updateMovement);
