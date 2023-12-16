@@ -1,6 +1,6 @@
 ## Socket.Io MMOClient app using React
 
-React application to connect express server handling socket.io to interact with everybody visiting the page.
+Developing a React application that integrates with an Express server equipped with Socket.io, enabling real-time interaction with all visitors on the site.
 
 This is the server
 https://github.com/Maccee/MMO_Server_Node.js.git
